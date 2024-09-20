@@ -1,0 +1,44 @@
+<h1 class="text-center">CREAR ARCHIVO o CARPETA</h1>
+<div class="container mt-3">
+  <!-- Formulario con referencia ngForm para validación -->
+  <form #form="ngForm" (ngSubmit)="addFile(form)" class="row g-3">
+    
+    <!-- Campo para el nombre del archivo -->
+    <div class="col-md-4">
+      <label for="name" class="form-label">Name</label>
+      <input #name="ngModel" name="name" [(ngModel)]="file.name" type="text" class="form-control" required>
+    </div>
+
+    <!-- Selección del tipo de archivo -->
+    <div class="col-md-4">
+      <label for="type" class="form-label">Type</label>
+      <select #type="ngModel" name="type" [(ngModel)]="file.type" class="form-select" required>
+        <!-- Uso correcto de ngFor y trackBy -->
+        <option [value]="fileTypes.FILE">Archivo</option>
+        <option [value]="fileTypes.FOLDER">Carpeta</option>
+      </select>
+    </div>
+
+    <!-- Selección de los dueños del archivo -->
+    <div class="col-md-4">
+      <label for="owner" class="form-label">Owners</label>
+      <select #owner="ngModel" name="owner" [(ngModel)]="file.owners" class="form-select" required multiple>
+        
+        @for (item of owners; track $index) {
+          <option [value]="item">{{item.name}}</option>
+          }
+      </select>
+    </div>
+
+    <!-- Botón de envío con validaciones -->
+    <div class="d-flex justify-content-center align-items-center">
+      <div class="col-12 text-center">
+        <button type="submit" class="btn btn-primary mt-3"
+          [disabled]="file.name== '' && file.type " > Guardar</button>
+         
+       
+      </div>
+    </div>
+    
+  </form>
+</div> 
