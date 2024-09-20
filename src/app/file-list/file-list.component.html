@@ -1,0 +1,37 @@
+<h1 class="text-center">LISTADO</h1>
+<div class="container mt-3">
+  <button class="btn btn-danger mb-3" (click)="deleteSelectedFiles()">Eliminar seleccionados</button>
+  <table class="table table-striped table-hover table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Seleccionar</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Tipo</th>
+        <th scope="col">Fecha de Creación</th>
+        <th scope="col">Dueños</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let file of files | async">
+        <td>
+          <input type="checkbox" (change)="toggleSelection(file)" [checked]="selectedFiles.includes(file)">
+         
+        </td>
+        <td>{{ file.name }}</td>
+        <td class="text-capitalize">{{ file.type === 0 ? 'Archivo' : 'Carpeta' }}</td>
+        <td>{{ file.creation | date }}</td>
+        <td>
+          <div *ngFor="let owner of file.owners" class="owner-avatar d-flex align-items-center">
+            <img [src]="owner.avatarUrl" [alt]="owner.name" class="avatar-img me-2">
+            <span>{{ owner.name }}</span>
+          </div>
+        </td>
+        <td>
+          <button class="btn btn-danger d-flex align-items-center"
+          [disabled]="selectedFiles.length > 0 || selectedFiles.includes(file)"
+          (click)="deleteFile(file)">Eliminar</button>        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
